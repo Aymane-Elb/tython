@@ -86,3 +86,9 @@ Les images sont nommees `ghcr.io/aymane-elb/tython-frontend` et `ghcr.io/aymane-
 La publication utilise le `GITHUB_TOKEN` fourni automatiquement avec la permission `packages: write` : aucun token personnel ni fichier `.env` ne doit etre ajoute au depot. Suivre les executions dans l’onglet **Actions** de GitHub. La CI publie les images mais ne deploie pas encore sur Proxmox.
 
 Reference : [publier des images Docker avec GitHub Actions](https://docs.github.com/en/actions/tutorials/publish-packages/publish-docker-images).
+
+## Déploiement sur une VM
+
+Le guide [DEPLOYMENT.md](DEPLOYMENT.md) décrit Proxmox en laboratoire, la création d'une VM Debian, Docker, les secrets, le déploiement et les vérifications.
+
+La production utilise `docker-compose.prod.yml`, `deploy/.env` (à créer depuis `deploy/.env.example`) et `bash ./deploy.sh`. Elle télécharge les images GHCR publiées par la CI et ajoute les healthchecks, la rotation des logs et un volume PostgreSQL distinct du développement.
