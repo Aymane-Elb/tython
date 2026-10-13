@@ -1,4 +1,5 @@
 FROM node:22-alpine AS build
+COPY client/nginx.conf /etc/nginx/conf.d/default.conf
 WORKDIR /app
 
 COPY package.json package-lock.json ./

@@ -14,5 +14,28 @@ services:
       interval: 2s
       timeout: 3s
       retries: 15
+  backend:
+    build: 
+      context: .
+      dockerfile: server/Dockerfile
+    environment:
+      DATABASE_URL: ${DOCKER_DATABASE_URL}
+      HOST: 0.0.0.0
+      PORT: 3001 
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+  frontend:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
 volumes:
   postgres_data:
