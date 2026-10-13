@@ -2,15 +2,26 @@
   "name": "tython",
   "private": true,
   "version": "1.0.0",
-  "workspaces": ["client", "server"],
-  "engines": { "node": ">=22.12.0" },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "engines": {
+    "node": "^22.13.0 || >=24.0.0"
+  },
   "scripts": {
     "dev": "concurrently -k -n API,WEB \"npm run dev -w server\" \"npm run dev -w client\"",
     "build": "npm run build -w client",
     "start": "npm start -w server",
     "test": "npm test -w server",
     "db:up": "docker compose up -d --wait",
-    "db:down": "docker compose down"
+    "db:down": "docker compose down",
+    "lint": "eslint server/ --max-warnings=0"
   },
-  "devDependencies": { "concurrently": "^9.2.1" }
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "concurrently": "^9.2.1",
+    "eslint": "^10.12.0",
+    "globals": "^17.13.0"
+  }
 }
