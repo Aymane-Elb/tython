@@ -10,7 +10,13 @@ Prérequis : Node.js **22.12+**, npm et Docker avec Docker Compose.
 
 ```bash
 npm install
+cp .env.example .env
 cp server/.env.example server/.env
+```
+
+Renseigner `POSTGRES_PASSWORD` dans `.env` a la racine, puis les memes identifiants dans `DATABASE_URL` de `server/.env` (encoder les caracteres speciaux du mot de passe dans l’URL). Ensuite :
+
+```bash
 npm run db:up
 npm run dev
 ```
@@ -19,7 +25,9 @@ Ouvrir **http://localhost:5173**. L’API écoute sur **http://127.0.0.1:3001**.
 
 Si PostgreSQL est déjà installé, créer une base et renseigner sa connexion dans `server/.env`, puis ignorer `npm run db:up`. Si le port 5432 est occupé, modifier le port hôte dans `compose.yaml` et `DATABASE_URL`. Si le port API change, adapter aussi le proxy dans `client/vite.config.js`.
 
-Les identifiants Docker fournis sont uniquement destinés au développement local. Cette application personnelle n’inclut pas d’authentification ; les utilisateurs d’une même instance partagent les tâches.
+Compose lit le `.env` racine et injecte les variables PostgreSQL au demarrage. Le serveur local lit `server/.env`. Ces fichiers sont ignores par Git et exclus des images Docker ; seuls les `.env.example`, sans secret reel, sont versionnes. Les Dockerfiles contiennent uniquement des valeurs non sensibles (`HOST`, `PORT`, `NODE_ENV`).
+
+Si le volume PostgreSQL existe deja, conserver ses identifiants : modifier `.env` ne change pas le mot de passe d’une base deja initialisee. Cette application personnelle n’inclut pas d’authentification ; les utilisateurs d’une même instance partagent les tâches.
 
 ## Structure
 
