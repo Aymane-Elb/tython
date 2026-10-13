@@ -2,8 +2,8 @@ import pg from 'pg';
 import { readFile } from 'node:fs/promises';
 import { createApp } from './app.js';
 
-if (!process.env.DATABASE_URL) {
-  console.error('DATABASE_URL manque. Copiez server/.env.example vers server/.env.');
+if (!process.env.DATABASE_URL && !process.env.PGHOST) {
+  console.error('Configurer DATABASE_URL ou PGHOST, PGUSER, PGPASSWORD et PGDATABASE.');
   process.exit(1);
 }
 
